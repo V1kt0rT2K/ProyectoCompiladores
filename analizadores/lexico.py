@@ -1,5 +1,5 @@
 from ply import lex;
-from config import Config
+from utils.config import Config
 
 class Lexer:
 
