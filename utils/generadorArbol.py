@@ -4,7 +4,6 @@ import os
 
 
 class GeneradorArbol():
-    
     def __init__(self):
         self.gramatica = """
             conversion: cantidad origen destino END
@@ -15,14 +14,13 @@ class GeneradorArbol():
 
             NUMERO: /[0-9]+/
             PUNTO: "."
-            MONEDA: "Euros"|"Lempiras"|"Dolares"|"Pesos"
+            MONEDA: "Euros"|"Lempiras"|"Dolares"|"Pesos"|"Yenes"|"Libras"|"Bitcoin"
             END: "$"
 
             %import common.WS
             %ignore WS
         """
-
-        self.parser = Lark(self.gramatica,start='conversion')      ##start se refiere al simbolo inicial
+        self.parser = Lark(self.gramatica, start='conversion')      ##start se refiere al simbolo inicial
 
     def generarArbol(self,cadena):
         #tree.pydot__tree_to_dot( self.parser.parse("1.2 Dolares Lempiras $"), 'tree.dot')

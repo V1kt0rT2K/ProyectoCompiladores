@@ -16,7 +16,7 @@ class Lexer:
         
 
     def t_MONEDA(self,t):
-        r'Dolares|Lempiras|Euros|Pesos'
+        r'Dolares|Lempiras|Euros|Pesos|Yenes|Libras|Bitcoin'
         t.value = str(t.value)
         self.tokenTable.append(f"TOKEN :: Valor: {t.value}\t\t Posicion:{t.lexpos}\t\t Tipo:{t.type}")    
         return t

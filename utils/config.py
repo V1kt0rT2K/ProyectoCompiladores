@@ -4,15 +4,15 @@ class Config:
         'PUNTO',
         'MONEDA',
         'END'
-        #'CANTIDAD',
-        #'ORIGEN',
-        #'DESTINO',
-        )
-    divisas=(
+    )
+    divisas = (
         "Dolares",
         "Euros",
         "Lempiras",
-        "Pesos"
+        "Pesos",
+        "Yenes",
+        "Libras",
+        "Bitcoin"
     )
     tasas = {
         "LempirasDolares": 0.039,
@@ -21,4 +21,10 @@ class Config:
         "EurosLempiras": 28.70, 
         "LempirasPesos": 0.79,
         "PesosLempiras": 1.27,
+        "LempirasYenes": 5.92,
+        "YenesLempiras": 0.17,
+        "LempirasLibras": 0.030,
+        "LibrasLempiras": 33.33,
+        "LempirasBitcoin": 0.0000021,
+        "BitcoinLempiras": 476190.48,
     }
