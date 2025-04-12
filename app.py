@@ -5,6 +5,7 @@ from utils.config import Config
 from analizadores.sintactico import Yax
 from analizadores.lexico import Lexer
 from utils.generadorArbol import GeneradorArbol
+from PIL import Image
 
 class App():
     def __init__(self,root):
@@ -125,12 +126,19 @@ class App():
         self.cadena.set(f"{self.operadores["cantidad"]} {self.operadores["origen"]} {self.operadores["destino"]} $")
 
     def generarArbol(self):
-        g = GeneradorArbol()
-        g.generarArbol(self.cadena.get())
+        try:
+            g = GeneradorArbol()
+            g.generarArbol(self.cadena.get())
+
+            img = Image.open('assets/tree.png')
+            img.show()
+        except:
+            print("Error Generando la Imagen")
 
     def calcularResultado(self):
         self.yax.parser.parse(self.cadena.get(), lexer=self.lexer.lexer)
 
+        #Formar tabla de detalles
         detailTable = f"Analizador Lexico:\n{"\n".join(self.lexer.tokenTable)}\nAnalizador Sintactico:\n{"\n".join(self.yax.productionsTable)}\n"
         
         lexicErrorTable = "No hay errores lexicos"

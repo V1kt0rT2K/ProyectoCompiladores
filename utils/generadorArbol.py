@@ -1,8 +1,6 @@
 from lark import Lark,tree
-import subprocess
-
 import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz/bin/'
+#os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz/bin/'
 
 
 class GeneradorArbol():
@@ -29,7 +27,7 @@ class GeneradorArbol():
     def generarArbol(self,cadena):
         #tree.pydot__tree_to_dot( self.parser.parse("1.2 Dolares Lempiras $"), 'tree.dot')
         #p = subprocess.call(["dot", "-Tpng", "tree.dot"], stdout=open("output.png", "wb"))       #dot -Tpng input.dot > output.png
-        tree.pydot__tree_to_png( self.parser.parse(cadena), 'tree.png')
+        tree.pydot__tree_to_png( self.parser.parse(cadena), 'assets/tree.png')
 
         return self.parser.parse(cadena).pretty()
     
