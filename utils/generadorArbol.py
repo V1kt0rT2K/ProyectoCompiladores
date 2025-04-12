@@ -1,6 +1,13 @@
 from lark import Lark,tree
 import os
-#os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz/bin/'
+import sys
+
+if(sys.platform.startswith('win32')):
+    os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz/bin/'
+elif(sys.platform.startswith('darwin')):
+    os.environ["PATH"] += os.pathsep + '/usr/local/bin'
+elif(sys.platform.startswith('linux')):
+    os.environ["PATH"] += os.pathsep + '/usr/bin'
 
 
 class GeneradorArbol():

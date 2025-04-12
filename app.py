@@ -256,17 +256,18 @@ class App():
             
             # Actualizar resultado
             self.resultado.set(self.yax.resultado)
-
-            # Limpiar las tablas despues del nuevo análisis
-            self.lexer.tokenTable = []
-            self.yax.productionsTable = []
-            self.lexer.errorsTable = []
-            self.yax.errorsTable = []
             
             # Mostrar advertencia si hay errores
             if self.lexer.errorsTable or self.yax.errorsTable:
                 messagebox.showwarning("Advertencia", 
                                     "Se encontraron errores durante el análisis. Revise las pestañas de errores para más detalles.")
+                
+            
+            # Limpiar las tablas despues del nuevo análisis
+            self.lexer.tokenTable = []
+            self.yax.productionsTable = []
+            self.lexer.errorsTable = []
+            self.yax.errorsTable = []
             
         except Exception as e:
             messagebox.showerror("Error", f"Ocurrió un error durante el análisis: {str(e)}")
