@@ -5,12 +5,14 @@ from analizadores.lexico import Lexer
 from analizadores.sintactico import Yax
 from utils.config import Config
 from utils.generadorArbol import GeneradorArbol
+from PIL import Image
 
 class App():
     def __init__(self, root):
         self.root = root
         self.root.title("Conversor de Divisas - Análisis Léxico/Sintáctico")
-        self.root.geometry('900x600')
+        self.root.geometry('1100x600')
+        self.root.resizable(0,0)
         self.root.configure(bg='#f0f2f5')
         
         try:
@@ -41,11 +43,11 @@ class App():
         self.yax = Yax()
         
         self.cantidad = tk.StringVar(root, "0.0")
-        self.cantidad.trace('w', self.updateCadena)
+        self.cantidad.trace('wu', self.updateCadena)
         self.origen = tk.StringVar(root, "")
-        self.origen.trace('w', self.updateCadena)
+        self.origen.trace('wu', self.updateCadena)
         self.destino = tk.StringVar(root, "")
-        self.destino.trace('w', self.updateCadena)
+        self.destino.trace('wu', self.updateCadena)
         self.resultado = tk.StringVar(root, "0.0")
         self.cadena = tk.StringVar(root, "$")
         
@@ -199,13 +201,16 @@ class App():
         cantidad = self.cantidad.get()
         origen = self.origen.get()
         destino = self.destino.get()
-        
+
         self.cadena.set(f"{cantidad} {origen} {destino} $")
     
     def generarArbol(self):
         try:
             g = GeneradorArbol()
             g.generarArbol(self.cadena.get())
+
+            i = Image.open('assets/tree.png')
+            i.show()
             messagebox.showinfo("Árbol Generado", "El árbol sintáctico se ha generado como 'tree.png'")
         except Exception as e:
             messagebox.showerror("Error", f"No se pudo generar el árbol: {str(e)}")
@@ -213,11 +218,6 @@ class App():
     
     def calcularResultado(self):
         try:
-            # Limpiar las tablas antes del nuevo análisis
-            self.lexer.tokenTable = []
-            self.yax.productionsTable = []
-            self.lexer.errorsTable = []
-            self.yax.errorsTable = []
             
             # Realizar el análisis
             self.yax.parser.parse(self.cadena.get(), lexer=self.lexer.lexer)
@@ -256,6 +256,12 @@ class App():
             
             # Actualizar resultado
             self.resultado.set(self.yax.resultado)
+
+            # Limpiar las tablas despues del nuevo análisis
+            self.lexer.tokenTable = []
+            self.yax.productionsTable = []
+            self.lexer.errorsTable = []
+            self.yax.errorsTable = []
             
             # Mostrar advertencia si hay errores
             if self.lexer.errorsTable or self.yax.errorsTable:
@@ -266,7 +272,7 @@ class App():
             messagebox.showerror("Error", f"Ocurrió un error durante el análisis: {str(e)}")
             self.text_sint_errors.insert(tk.END, f"\nError inesperado: {str(e)}")
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()
+# if __name__ == "__main__":
+#     root = tk.Tk()
+#     app = App(root)
+#     root.mainloop()

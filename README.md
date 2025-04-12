@@ -8,9 +8,9 @@ GRUPO #2
 ## ANTES DE EJECUTAR
 
 Version de python usada 3.13.
-Se debe instalar Graphviz
+Se debe instalar Graphviz, y agregarlo al PATH del sistema para poder generar el arbol sintactico.
 
-Se deben instalar los modulos de Lark y Ply
+Se deben instalar los modulos correspondientes con el siguiente comando:
 
 ```bash
   pip install -r requirements.txt
@@ -21,3 +21,6 @@ Se deben instalar los modulos de Lark y Ply
 ```bash
   python main.py
 ```
+
+# EJEMPLO DE ARBOL SINTACTICO GENERADO
+![Ejemplo Imagen](assets/tree.png)
