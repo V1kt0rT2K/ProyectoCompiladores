@@ -1,10 +1,19 @@
 from analizadores.lexico import Lexer
 from analizadores.sintactico import Yax
+import tkinter as tk
+from tkinter import ttk, filedialog
+from app import App
 
-lexer = Lexer()
-yax = Yax()
+root = tk.Tk()
+root.geometry('800x400')
+root.configure(bg='white')
+App(root)
+root.mainloop()
 
-yax.parser.parse('20.1 Dolares Euros',lexer=lexer.lexer)
+# lexer = Lexer()
+# yax = Yax()
 
-print("\n".join(lexer.tokenTable))
-print("\n".join(yax.productionsTable))
+# yax.parser.parse('20.1 Dolares Euros',lexer=lexer.lexer)
+
+# print("\n".join(lexer.tokenTable))
+# print("\n".join(yax.productionsTable))

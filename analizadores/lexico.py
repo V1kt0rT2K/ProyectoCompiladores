@@ -5,20 +5,26 @@ class Lexer:
 
     def t_PUNTO(self,t):
         r'\.'
-        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos} Tipo:{t.type}")
+        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos}\t Tipo:{t.type}")
         return t
 
     def t_NUMERO(self,t):
         r'[0-9]+'
         t.value = int(t.value)    
-        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos} Tipo:{t.type}")
+        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos}\t Tipo:{t.type}")
         return t
         
 
     def t_MONEDA(self,t):
-        r'Dolares|Lempiras|Euros'
+        r'Dolares|Lempiras|Euros|Pesos'
         t.value = str(t.value)
-        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos} Tipo:{t.type}")    
+        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos}\t Tipo:{t.type}")    
+        return t
+    
+    def t_END(self,t):
+        r'\$'
+        #t.value = str(t.value)
+        self.tokenTable.append(f"TOKEN :: Valor:{t.value} Posicion:{t.lexpos}\t Tipo:{t.type}")    
         return t
 
     def t_COMMENT(self,t):
@@ -27,6 +33,7 @@ class Lexer:
 
     def t_error(self,t):
         print("Illegal character '%s'" % t.value[0])
+        self.errorsTable.append(f"Error Found: {t.value} at position {t.lexpos}") 
         t.lexer.skip(1)
         
     def build(self,input):
@@ -35,6 +42,7 @@ class Lexer:
     def __init__(self):
         self.tokens = Config.tokens
         self.tokenTable = []
+        self.errorsTable = []
         self.lexer = lex.lex(module=self)
         
 # m = Lexer()

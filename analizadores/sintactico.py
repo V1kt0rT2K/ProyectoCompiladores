@@ -6,13 +6,9 @@ from utils.conversor import Conversor
 class Yax:
 
     def p_conversion(self, p):
-        '''conversion : cantidad origen destino'''
+        '''conversion : cantidad origen destino END'''
         p[0] = str(p[1]) + p[2] + p[3]
-        print(p[1],p[2],p[3])
-        print(
-            self.conversor.conversion(
-            float(p[1]), p[2],p[3])
-            )
+        self.resultado = self.conversor.conversion(float(p[1]), p[2],p[3])
         
         self.productionsTable.append(f"conversion: {p[0]}")
 
@@ -42,10 +38,12 @@ class Yax:
 
     def __init__(self):
         self.productionsTable = []
-        
-        self.conversor = Conversor()
+        self.errorsTable = []
 
+        self.resultado = 0
+        self.conversor = Conversor()
         self.tokens = Config.tokens
+        
         self.parser = yacc.yacc(module=self)
 
 
