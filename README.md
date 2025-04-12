@@ -8,6 +8,7 @@ GRUPO #2
 ## ANTES DE EJECUTAR
 
 Version de python usada 3.13.
+Se debe instalar Graphviz
 
 Se deben instalar los modulos de Lark y Ply
 

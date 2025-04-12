@@ -4,6 +4,7 @@ from tkinter import ttk
 from utils.config import Config
 from analizadores.sintactico import Yax
 from analizadores.lexico import Lexer
+from utils.generadorArbol import GeneradorArbol
 
 class App():
     def __init__(self,root):
@@ -90,6 +91,10 @@ class App():
         self.buttonCalcular["text"] = "Calcular"
         self.buttonCalcular.grid(row=4,column=0,padx=10,pady=10)
 
+        self.buttonArbol = ttk.Button(self.resultFrame, command=self.generarArbol)
+        self.buttonArbol["text"] = "Generar Arbol"
+        self.buttonArbol.grid(row=4,column=1,padx=10,pady=10)
+
         ############# DETAIL FRAME ###################
         #Label Cadena
         self.labelCadena = tk.Label(self.detailFrame)
@@ -110,7 +115,7 @@ class App():
         #Textbox Detalles
         self.textboxDetalles = tk.Text(self.detailFrame)
         #self.textboxDetalles["state"] = tk.DISABLED
-        self.textboxDetalles.grid(row=3,padx=10,pady=10)
+        self.textboxDetalles.grid(row=3,padx=10,pady=10,ipady=20)
 
     def updateCadena(self,*args):
         self.operadores["cantidad"] = self.cantidad.get()
@@ -119,18 +124,33 @@ class App():
 
         self.cadena.set(f"{self.operadores["cantidad"]} {self.operadores["origen"]} {self.operadores["destino"]} $")
 
+    def generarArbol(self):
+        g = GeneradorArbol()
+        g.generarArbol(self.cadena.get())
+
     def calcularResultado(self):
         self.yax.parser.parse(self.cadena.get(), lexer=self.lexer.lexer)
 
-        detailTable = "\n".join(self.lexer.tokenTable) + "\n"+ "\n".join(self.yax.productionsTable)
+        detailTable = f"Analizador Lexico:\n{"\n".join(self.lexer.tokenTable)}\nAnalizador Sintactico:\n{"\n".join(self.yax.productionsTable)}\n"
+        
+        lexicErrorTable = "No hay errores lexicos"
+        sintacticErrorTable = "No hay errores sintacticos"
+        
+        if len(self.lexer.errorsTable) != 0:
+            lexicErrorTable = "\n".join(self.lexer.errorsTable)
+        if len(self.yax.errorsTable) != 0:
+            sintacticErrorTable = "\n".join(self.yax.errorsTable)
+
+        errorTable = f"Errores lexicos:\n {lexicErrorTable}\nErrores Sintacticos:\n{sintacticErrorTable}"
 
         self.resultado.set(self.yax.resultado)
         self.textboxDetalles.delete("1.0", tk.END)
-        self.textboxDetalles.insert(tk.INSERT,detailTable)
+        self.textboxDetalles.insert(tk.INSERT,detailTable+errorTable)
 
         #Limpiar las tablas de informacion
         self.lexer.tokenTable = []
         self.yax.productionsTable = []      
         self.lexer.errorsTable = []
+        self.yax.errorsTable  = []
 
 
